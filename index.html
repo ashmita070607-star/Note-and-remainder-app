@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes & Reminder App - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Interactive Background Canvas -->
+    <canvas id="bgCanvas"></canvas>
+    
+    <!-- Confetti Canvas -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- Glowing Custom Cursor -->
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span class="logo-icon">📝</span> Notes & Reminders
+        </div>
+
+        <div class="user-section">
+            <span id="userGreeting">User</span>
+            <button class="logout-btn magnetic-btn" onclick="logoutUser()">
+                Logout
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main>
+        <!-- Welcome Section -->
+        <section class="welcome">
+            <h1 class="animated-title" id="welcomeTitle">
+                Welcome, <span id="dashboardUsername">User</span> 👋
+            </h1>
+            <p>
+                Here's your personal productivity dashboard. <span id="currentDate" style="font-weight: 700; color: #c084fc; margin-left: 8px;"></span>
+            </p>
+        </section>
+
+        <!-- Statistics Section with SVG Progress Meter -->
+        <section class="stats">
+            <div class="stat-card 3d-card">
+                <div class="glare"></div>
+                <span class="stat-icon">📝</span>
+                <div>
+                    <h3 id="totalNotes">0</h3>
+                    <p>Total Notes</p>
+                </div>
+            </div>
+
+            <div class="stat-card 3d-card">
+                <div class="glare"></div>
+                <span class="stat-icon">⏰</span>
+                <div>
+                    <h3 id="totalReminders">0</h3>
+                    <p>Total Reminders</p>
+                </div>
+            </div>
+
+            <div class="stat-card 3d-card progress-card">
+                <div class="glare"></div>
+                <div class="progress-ring-container">
+                    <svg class="progress-ring" width="64" height="64">
+                        <circle class="progress-ring-bg" stroke="rgba(255, 255, 255, 0.1)" stroke-width="6" fill="transparent" r="24" cx="32" cy="32"/>
+                        <circle id="progressCircle" class="progress-ring-circle" stroke="#10b981" stroke-width="6" stroke-dasharray="150.79" stroke-dashoffset="150.79" fill="transparent" r="24" cx="32" cy="32"/>
+                    </svg>
+                    <span class="progress-percent-text" id="progressPercent">0%</span>
+                </div>
+                <div>
+                    <h3 id="completedReminders">0</h3>
+                    <p>Completed Tasks</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notes Section -->
+        <section class="section">
+            <div class="section-header">
+                <div>
+                    <h2>My Notes</h2>
+                    <p>Create and manage your personal notes with instant search.</p>
+                </div>
+                <button class="primary-btn magnetic-btn" onclick="openNoteForm()">
+                    <span>+ Add Note</span>
+                </button>
+            </div>
+
+            <!-- Search -->
+            <input
+                type="text"
+                id="searchNotes"
+                class="search-box"
+                placeholder="🔍 Search your notes in real-time..."
+                oninput="displayNotesFLIP()"
+            >
+
+            <!-- Notes Container -->
+            <div id="notesContainer" class="cards-container"></div>
+        </section>
+
+        <!-- Reminder Section -->
+        <section class="section">
+            <div class="section-header">
+                <div>
+                    <h2>My Reminders</h2>
+                    <p>Keep track of important tasks and events with real-time status tracking.</p>
+                </div>
+                <button class="primary-btn magnetic-btn" onclick="openReminderForm()">
+                    <span>+ Add Reminder</span>
+                </button>
+            </div>
+
+            <!-- Reminder Container -->
+            <div id="remindersContainer" class="cards-container"></div>
+        </section>
+    </main>
+
+    <!-- Note Modal -->
+    <div id="noteModal" class="modal">
+        <div class="modal-content 3d-card">
+            <div class="glare"></div>
+            <span class="close" onclick="closeNoteForm()">&times;</span>
+            <h2 id="noteFormTitle">Add Note</h2>
+
+            <input
+                type="text"
+                id="noteTitle"
+                placeholder="Note title..."
+            >
+
+            <textarea
+                id="noteContent"
+                placeholder="Write your note here..."
+                rows="6"
+            ></textarea>
+
+            <button class="primary-btn magnetic-btn" onclick="saveNote()">
+                <span>Save Note</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Reminder Modal -->
+    <div id="reminderModal" class="modal">
+        <div class="modal-content 3d-card">
+            <div class="glare"></div>
+            <span class="close" onclick="closeReminderForm()">&times;</span>
+            <h2>Add Reminder</h2>
+
+            <input
+                type="text"
+                id="reminderTitle"
+                placeholder="Reminder title..."
+            >
+
+            <textarea
+                id="reminderDescription"
+                placeholder="Description..."
+                rows="4"
+            ></textarea>
+
+            <label>Date</label>
+            <input type="date" id="reminderDate">
+
+            <label>Time</label>
+            <input type="time" id="reminderTime">
+
+            <button class="primary-btn magnetic-btn" onclick="saveReminder()">
+                <span>Save Reminder</span>
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <p>Personal Notes & Reminder App © 2026 • Modern Edition</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
